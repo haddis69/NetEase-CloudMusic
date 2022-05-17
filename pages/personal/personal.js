@@ -1,3 +1,6 @@
+let startY=0;
+let moveY=0;
+let distance=0;
 // pages/personal/personal.js
 Page({
 
@@ -5,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    coverTransform:'translateY(0)',
+    coverTransition:''
   },
 
   /**
@@ -14,7 +18,32 @@ Page({
   onLoad(options) {
 
   },
-
+  handleTouchStart(event){
+    this.setData({
+      coverTransition:''
+    })
+    startY=event.touches[0].clientY;
+  },
+  handleTouchMove(event){
+    //可能有多个手指，但我们要的是第一个手指的事件
+    moveY=event.touches[0].clientY;
+    distance=moveY-startY;
+    if(distance<=0){
+      return;
+    }
+    if(distance>=80){
+      distance=80;
+    }
+    this.setData({
+      coverTransform:`translateY(${distance}rpx)`,
+    })
+  },
+  handleTouchEnd(){
+    this.setData({
+      coverTransform:'translateY(0rpx)',
+      coverTransition:'transform linear 1s'
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
