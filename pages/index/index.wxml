@@ -1,5 +1,5 @@
 <view class="indexContainer">
-  <swiper class="banners" indicator-dots="true" indicator-color="ivory" indicator-active-color="#d43c33">
+  <swiper class="banners" indicator-dots="true" indicator-color="ivory" indicator-active-color="#d43c33" autoplay>
     <swiper-item wx:for="{{bannerList}}" wx:key="bannerId">
       <image src="{{item.pic}}"></image>
     </swiper-item>
