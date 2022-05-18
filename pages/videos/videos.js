@@ -1,3 +1,4 @@
+import request from '../../utils/request'
 // pages/videos/videos.js
 Page({
 
@@ -5,16 +6,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    videoGroupList:[],
+    navId:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.getVideoGroupListData();
   },
-
+  async getVideoGroupListData(){
+    let result=await request('/video/group/list');
+    this.setData({
+      videoGroupList:result.data.slice(0,14),
+      navId:result.data[0].id
+    })
+  },
+  changeNav(event){
+    this.setData({
+      navId:event.currentTarget.id
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
