@@ -1,3 +1,5 @@
+import request from '../../utils/request'
+
 let startY=0;
 let moveY=0;
 let distance=0;
@@ -9,14 +11,31 @@ Page({
    */
   data: {
     coverTransform:'translateY(0)',
-    coverTransition:''
+    coverTransition:'',
+    userInfo:{},
+    recentPlayList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    let userInfo=wx.getStorageSync('userInfo');
+    if(userInfo){
+      this.setData({
+        userInfo:JSON.parse(userInfo)
+      })
+      //获取最近播放
+      this.getRecentPlayList(this.data.userInfo.userId)
+    }
+  },
+  async getRecentPlayList(userId){
+    let result=await request('/user/record',{uid:userId,type:0});
+    if(result.code===200){
+      this.setData({
+        recentPlayList:result.allData.slice(0,10)
+      })
+    }
   },
   handleTouchStart(event){
     this.setData({
@@ -43,6 +62,11 @@ Page({
       coverTransform:'translateY(0rpx)',
       coverTransition:'transform linear 1s'
     })
+  },
+  toLogin(){
+   wx.reLaunch({
+     url: '/pages/login/login',
+   })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

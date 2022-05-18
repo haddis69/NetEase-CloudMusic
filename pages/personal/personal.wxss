@@ -211,3 +211,16 @@
 .cardList .card-item .more {
   float: right;
 }
+
+.recentScroll{
+  display: flex;
+  height: 200rpx;
+}
+.recentItem{
+  margin-right: 20rpx;
+}
+.recentItem image{
+  height: 200rpx;
+  width: 200rpx;
+  border-radius: 10rpx;
+}
