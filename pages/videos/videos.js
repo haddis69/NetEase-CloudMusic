@@ -7,7 +7,8 @@ Page({
    */
   data: {
     videoGroupList:[],
-    navId:''
+    navId:'',
+    videoList:[]
   },
 
   /**
@@ -16,17 +17,33 @@ Page({
   onLoad(options) {
     this.getVideoGroupListData();
   },
+  //获取顶部视频分类列表
   async getVideoGroupListData(){
     let result=await request('/video/group/list');
     this.setData({
       videoGroupList:result.data.slice(0,14),
       navId:result.data[0].id
     })
+    this.getVideoList(this.data.navId);
+  },
+  //获取视频列表数据
+  async getVideoList(navId){
+    let result= await request('/video/group',{id:navId});
+    wx.hideLoading();
+    this.setData({
+      videoList:result.datas
+    })
   },
   changeNav(event){
     this.setData({
-      navId:event.currentTarget.id
+      navId:event.currentTarget.id,
+      videoList:[]
     })
+    wx.showLoading({
+      title: '视频加载中',
+    })
+    //切换Nav的时候也要重新加载分类视频
+    this.getVideoList(this.data.navId);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

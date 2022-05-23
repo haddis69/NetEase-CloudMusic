@@ -33,7 +33,8 @@ Page({
       })
       return;
     }
-    let result = await request('/login/cellphone',{phone,password})
+    //这里写isLogin:true是为了在request中知道我们发的是登录请求
+    let result = await request('/login/cellphone',{phone,password,isLogin:true})
     if(result.code===200){
       wx.showToast({
         title: '登录成功',
