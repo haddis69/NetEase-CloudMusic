@@ -31,6 +31,9 @@
 .navItem .active{
   border-bottom: 1rpx solid #d43c33;
 }
+.videoScroll{
+  height: calc(100vh - 152rpx);
+}
 .videoItem{
   padding: 0 3%;
 }
