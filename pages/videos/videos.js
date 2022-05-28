@@ -8,7 +8,8 @@ Page({
   data: {
     videoGroupList:[],
     navId:'',
-    videoList:[]
+    videoList:[],
+    videoId:''
   },
 
   /**
@@ -44,6 +45,19 @@ Page({
     })
     //切换Nav的时候也要重新加载分类视频
     this.getVideoList(this.data.navId);
+  },
+  handlePlay(event){
+    let vid=event.currentTarget.id;
+    //this.vid!==vid表示不是同一首歌继续播放或关闭
+    //this.videoContext保证不是第一首歌，否则undefined下的stop()就会报错
+    //赋给this，意思是不管点多少个视频，也只有这一个属性，后面的会覆盖前面的
+    //video里加上了autoplay，一旦video标签显示就会自动播放
+    this.vid!==vid&&this.videoContext&&this.videoContext.stop();
+    this.vid=vid;
+    this.setData({
+      videoId:vid
+    })
+    this.videoContext=wx.createVideoContext(vid);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
