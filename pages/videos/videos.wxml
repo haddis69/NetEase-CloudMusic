@@ -13,7 +13,7 @@
   </scroll-view>
   <scroll-view scroll-y class="videoScroll">
     <view class="videoItem" wx:for="{{videoList}}" wx:key="index">
-      <video src="{{item.data.urlInfo.url}}" bindplay="handlePlay" id="{{item.data.vid}}" wx:if="{{item.data.vid===videoId}}" poster="{{item.data.coverUrl}}" autoplay object-fit="cover"></video>
+      <video src="{{item.data.urlInfo.url}}" bindplay="handlePlay" id="{{item.data.vid}}" wx:if="{{item.data.vid===videoId}}" poster="{{item.data.coverUrl}}" autoplay object-fit="cover" bindtimeupdate="handleTimeUpdate" bindended="handleEnded"></video>
       <image src="{{item.data.coverUrl}}" bindtap="handlePlay" wx:else id="{{item.data.vid}}"></image>
       <view class="content">{{item.data.title}}</view>
       <view class="footer">

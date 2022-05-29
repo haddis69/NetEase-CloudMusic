@@ -9,7 +9,8 @@ Page({
     videoGroupList:[],
     navId:'',
     videoList:[],
-    videoId:''
+    videoId:'',
+    videoUpdateTime:[]
   },
 
   /**
@@ -58,6 +59,38 @@ Page({
       videoId:vid
     })
     this.videoContext=wx.createVideoContext(vid);
+    //跟下面的视频播放的回调handleTimeUpdate同理
+    //如果播放记录里有当前视频的vid，就直接调用wx.createVideoContext实例的seek方法
+    //seek的参数是秒，直接定位到指定的视频位置
+    let {videoUpdateTime}=this.data;
+    let videoItem=videoUpdateTime.find(item=>item.vid===vid);
+    if(videoItem){
+      this.videoContext.seek(videoItem.currentTime);
+    }
+  },
+  //视频播放的回调
+  handleTimeUpdate(event){
+    let videoTimeObj={vid:event.currentTarget.id,currentTime:event.detail.currentTime};
+    let {videoUpdateTime}=this.data;
+    let videoItem=videoUpdateTime.find(item=>item.vid===event.currentTarget.id);
+    if(videoItem){
+      videoItem.currentTime=event.detail.currentTime
+    }else{
+      videoUpdateTime.push(videoTimeObj);
+    }
+    this.setData({
+      videoUpdateTime
+    })
+  },
+  handleEnded(event){
+    let vid=event.currentTarget.id;
+    let {videoUpdateTime}=this.data;
+    //findIndex方法可以找到数组中指定条件的元素的角标
+    let index=videoUpdateTime.findIndex(item=>item.vid===vid);
+    videoUpdateTime.splice(index,1);
+    this.setData({
+      videoUpdateTime
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
