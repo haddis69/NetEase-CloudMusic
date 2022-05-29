@@ -10,7 +10,8 @@ Page({
     navId:'',
     videoList:[],
     videoId:'',
-    videoUpdateTime:[]
+    videoUpdateTime:[],
+    isTriggered:false
   },
 
   /**
@@ -33,7 +34,9 @@ Page({
     let result= await request('/video/group',{id:navId});
     wx.hideLoading();
     this.setData({
-      videoList:result.datas
+      videoList:result.datas,
+      //关闭下拉刷新
+      isTriggered:false
     })
   },
   changeNav(event){
@@ -91,6 +94,10 @@ Page({
     this.setData({
       videoUpdateTime
     })
+  },
+  //自定义下拉刷新，发网络请求
+  handleRefresher(){
+    this.getVideoList(this.data.navId);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -11,7 +11,7 @@
       <view class="navContent {{item.id==navId&&'active'}}" bindtap="changeNav" id="{{item.id}}">{{item.name}}</view>
     </view>
   </scroll-view>
-  <scroll-view scroll-y class="videoScroll">
+  <scroll-view scroll-y class="videoScroll" refresher-enabled bindrefresherrefresh="handleRefresher" refresher-triggered="{{isTriggered}}">
     <view class="videoItem" wx:for="{{videoList}}" wx:key="index">
       <video src="{{item.data.urlInfo.url}}" bindplay="handlePlay" id="{{item.data.vid}}" wx:if="{{item.data.vid===videoId}}" poster="{{item.data.coverUrl}}" autoplay object-fit="cover" bindtimeupdate="handleTimeUpdate" bindended="handleEnded"></video>
       <image src="{{item.data.coverUrl}}" bindtap="handlePlay" wx:else id="{{item.data.vid}}"></image>
