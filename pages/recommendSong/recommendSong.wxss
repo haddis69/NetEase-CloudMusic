@@ -21,3 +21,51 @@
 .recommendSongContainer .header .date .day{
   font-size: 50rpx;
 }
+.listContainer{
+  position: relative;
+  top:-20rpx;
+  padding: 0 20rpx;
+  background-color: #fff;
+  border-radius: 30rpx;
+}
+.listContainer .listHeader{
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.listContainer .listHeader .changeMore{
+  float: right;
+}
+.listScroll{
+  height: calc(100vh - 380rpx);
+}
+.scrollItem{
+  position: relative;
+  display: flex;
+  margin-bottom: 20rpx;
+}
+.scrollItem image{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+}
+.musicInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 40rpx;
+}
+.musicInfo text{
+  font-size: 30rpx;
+  max-width: 500rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scrollItem .iconfont{
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
