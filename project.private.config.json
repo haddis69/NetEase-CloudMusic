@@ -10,7 +10,7 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/recommendSong/recommendSong",
+          "pathName": "pages/songDetail/songDetail",
           "query": "",
           "launchMode": "default",
           "scene": null

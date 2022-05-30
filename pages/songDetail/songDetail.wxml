@@ -1,0 +1,9 @@
+<view class="songDetailContainer">
+  <view class="author">123</view>
+  <view class="circle"></view>
+  <image class="needle" src="/static/images/song/needle.png"></image>
+  <view class="distContainer">
+    <image class="dist" src="/static/images/song/disc.png"/>
+    <image class="musicImg" src="/static/images/nvsheng.jpg"></image>
+  </view>
+</view>
