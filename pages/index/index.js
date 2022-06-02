@@ -9,6 +9,11 @@ Page({
    recommendList:[],
    topList:[]
   },
+  toRecommendSong(){
+    wx.navigateTo({
+      url: '/pages/recommendSong/recommendSong',
+    })
+  },
   onLoad:async function() {
     let bannerListData = await request('/banner',{type:2});
     this.setData({
