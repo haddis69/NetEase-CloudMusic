@@ -1,3 +1,4 @@
+import request from '../../utils/request'
 // pages/songDetail/songDetail.js
 Page({
 
@@ -5,14 +6,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isPlay:false
+    isPlay:false,
+    song:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    //options默认是一个空对象，如果有 query参数就是一个有值的对象
+    //options的长度不能太长
+    let {musicId}=options;
+    this.getMusicInfo(musicId);
+  },
+  async getMusicInfo(musicId){
+    let songData = await request('/song/detail',{ids:musicId});
+    this.setData({
+      song:songData.songs[0]
+    })
+    wx.setNavigationBarTitle({
+      title: this.data.song.name,
+    })
   },
   handleMusicPlay(){
     let isPlay=!this.data.isPlay;

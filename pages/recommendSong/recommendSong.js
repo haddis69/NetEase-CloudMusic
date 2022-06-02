@@ -38,6 +38,12 @@ Page({
       recommendList:result.recommend
     })
   },
+  toSongDetail(event){
+    const {song}=event.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/songDetail/songDetail?musicId=${song.id}`
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
