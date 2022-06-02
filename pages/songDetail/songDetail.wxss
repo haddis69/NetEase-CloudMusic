@@ -97,7 +97,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100rpx;
   z-index: 1;
   height: 4rpx;
   background-color: red;

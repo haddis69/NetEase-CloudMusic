@@ -1,4 +1,5 @@
 import request from '../../utils/request'
+import moment from 'moment';
 import PubSub from 'pubsub-js'
 //获取app实例，可以看到app.js里的全局数据
 const appInstance=getApp();
@@ -10,7 +11,10 @@ Page({
    */
   data: {
     isPlay:false,
-    song:{}
+    song:{},
+    currentTime:'00:00',
+    durationTime:'00:00',
+    currentWidth:0
   },
 
   /**
@@ -46,13 +50,23 @@ Page({
         isPlay:false
       })
     })
+    this.backgroundManager.onTimeUpdate(()=>{
+      let currentTime=moment(this.backgroundManager.currentTime*1000).format('mm:ss');
+      let currentWidth=this.backgroundManager.currentTime*1000/this.data.song.dt*450;
+      this.setData({
+        currentTime,
+        currentWidth
+      })
+    })
     appInstance.globalData.isMusicPlay=false;
     this.getMusicInfo(musicId);
   },
   async getMusicInfo(musicId){
     let songData = await request('/song/detail',{ids:musicId});
+    let musicDt=moment(songData.songs[0].dt).format('mm:ss');
     this.setData({
-      song:songData.songs[0]
+      song:songData.songs[0],
+      durationTime:musicDt
     })
     wx.setNavigationBarTitle({
       title: this.data.song.name,
