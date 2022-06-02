@@ -1,4 +1,7 @@
 import request from '../../utils/request'
+import PubSub from 'pubsub-js'
+//获取app实例，可以看到app.js里的全局数据
+const appInstance=getApp();
 // pages/songDetail/songDetail.js
 Page({
 
@@ -19,21 +22,31 @@ Page({
     let {musicId}=options;
     //创建音乐播放的实例
     this.backgroundManager=wx.getBackgroundAudioManager();
+    //如果退出之后点进来的还是这首歌，就自动播放
+    if(appInstance.globalData.isMusicPlay===true&&appInstance.globalData.musicId===musicId){
+      this.setData({
+        isPlay:true
+      })
+    }
     this.backgroundManager.onPlay(()=>{
       this.setData({
         isPlay:true
       })
+      appInstance.globalData.isMusicPlay=true;
+      appInstance.globalData.musicId=musicId;
     })
     this.backgroundManager.onPause(()=>{
       this.setData({
         isPlay:false
       })
+      appInstance.globalData.isMusicPlay=false;
     })
     this.backgroundManager.onStop(()=>{
       this.setData({
         isPlay:false
       })
     })
+    appInstance.globalData.isMusicPlay=false;
     this.getMusicInfo(musicId);
   },
   async getMusicInfo(musicId){
@@ -62,6 +75,10 @@ Page({
     }else{
       this.backgroundManager.pause();
     }
+  },
+  handleSwitch(event){
+    let type=event.currentTarget.id;
+    console.log(type);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

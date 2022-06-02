@@ -1,0 +1,22 @@
+{
+  "name": "netease-cloudmusic",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haddis69/NetEase-CloudMusic.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haddis69/NetEase-CloudMusic/issues"
+  },
+  "homepage": "https://github.com/haddis69/NetEase-CloudMusic#readme",
+  "dependencies": {
+    "pubsub-js": "^1.9.4"
+  }
+}
