@@ -8,7 +8,8 @@ Page({
   data: {
     day:0,
     month:0,
-    recommendList:[]
+    recommendList:[],
+    index:0
   },
 
   /**
@@ -32,6 +33,25 @@ Page({
       month:new Date().getMonth()+1
     })
     this.getRecommendList();
+    PubSub.subscribe('switchTab',(_,type)=>{
+     let {recommendList,index}=this.data;
+     if(type==='pre'){
+      if(index===0){
+        index=recommendList.length
+      }
+      index-=1;
+     }else{
+       if(index===recommendList.length-1){
+         index=-1;
+       }
+      index+=1;
+     }
+     this.setData({
+       index
+     })
+     let musicId=recommendList[index].id;
+     PubSub.publish('musicId',musicId);
+    })
   },
   async getRecommendList(){
     let result=await request('/recommend/songs');
@@ -40,7 +60,10 @@ Page({
     })
   },
   toSongDetail(event){
-    const {song}=event.currentTarget.dataset;
+    const {song,index}=event.currentTarget.dataset;
+    this.setData({
+      index
+    })
     wx.navigateTo({
       url: `/pages/songDetail/songDetail?musicId=${song.id}`
     })

@@ -78,7 +78,14 @@ Page({
   },
   handleSwitch(event){
     let type=event.currentTarget.id;
-    console.log(type);
+    //切换歌曲的时候当前停掉
+    this.backgroundManager.stop();
+    PubSub.subscribe('musicId',(_,id)=>{
+      this.getMusicInfo(id);
+      this.musicControl(true);
+      PubSub.unsubscribe('musicId');
+    })
+    PubSub.publish('switchTab',type)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
