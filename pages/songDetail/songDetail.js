@@ -58,6 +58,13 @@ Page({
         currentWidth
       })
     })
+    this.backgroundManager.onEnded(()=>{
+      PubSub.publish('switchTab','next');
+      this.setData({
+        currentWidth:0,
+        currentTime:'00:00'
+      })
+    })
     appInstance.globalData.isMusicPlay=false;
     this.getMusicInfo(musicId);
   },
