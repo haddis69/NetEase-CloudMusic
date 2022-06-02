@@ -17,6 +17,23 @@ Page({
     //options默认是一个空对象，如果有 query参数就是一个有值的对象
     //options的长度不能太长
     let {musicId}=options;
+    //创建音乐播放的实例
+    this.backgroundManager=wx.getBackgroundAudioManager();
+    this.backgroundManager.onPlay(()=>{
+      this.setData({
+        isPlay:true
+      })
+    })
+    this.backgroundManager.onPause(()=>{
+      this.setData({
+        isPlay:false
+      })
+    })
+    this.backgroundManager.onStop(()=>{
+      this.setData({
+        isPlay:false
+      })
+    })
     this.getMusicInfo(musicId);
   },
   async getMusicInfo(musicId){
@@ -30,22 +47,20 @@ Page({
   },
   handleMusicPlay(){
     let isPlay=!this.data.isPlay;
-    this.setData({
-      isPlay
-    })
+    // this.setData({
+    //   isPlay
+    // })
     this.musicControl(isPlay);
   },
   //控制音乐播放的功能函数
   async musicControl(isPlay){
-    //创建音乐播放的实例
-    let backgroundManager=wx.getBackgroundAudioManager();
     if(isPlay){
       let musicLinkData=await request('/song/url',{id:this.data.song.id});
       let musicLink=musicLinkData.data[0].url;
-      backgroundManager.src=musicLink;
-      backgroundManager.title=this.data.song.name;
+      this.backgroundManager.src=musicLink;
+      this.backgroundManager.title=this.data.song.name;
     }else{
-      backgroundManager.pause();
+      this.backgroundManager.pause();
     }
   },
   /**
