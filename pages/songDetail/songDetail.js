@@ -33,6 +33,20 @@ Page({
     this.setData({
       isPlay
     })
+    this.musicControl(isPlay);
+  },
+  //控制音乐播放的功能函数
+  async musicControl(isPlay){
+    //创建音乐播放的实例
+    let backgroundManager=wx.getBackgroundAudioManager();
+    if(isPlay){
+      let musicLinkData=await request('/song/url',{id:this.data.song.id});
+      let musicLink=musicLinkData.data[0].url;
+      backgroundManager.src=musicLink;
+      backgroundManager.title=this.data.song.name;
+    }else{
+      backgroundManager.pause();
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
