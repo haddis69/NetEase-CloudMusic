@@ -6,6 +6,15 @@
     <image class="dist" src="/static/images/song/disc.png" />
     <image class="musicImg {{isPlay && '.distAnimation'}}" src="{{song.al.picUrl}}"></image>
   </view>
+  <view class="progressControl">
+    <text>00:00</text>
+    <view class="barControl">
+      <view class="currentControl">
+        <view class="audioCircle"></view>
+      </view>
+    </view>
+    <text>03:00</text>
+  </view>
   <view class="musicControl">
     <text class="iconfont icon-iconsMusicyemianbofangmoshiShuffle"></text>
     <text class="iconfont icon-shangyishou" id="pre" bindtap="handleSwitch"></text>
