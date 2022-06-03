@@ -5,7 +5,8 @@
     "pages/videos/videos",
     "pages/login/login",
     "pages/recommendSong/recommendSong",
-    "pages/songDetail/songDetail"
+    "pages/songDetail/songDetail",
+    "pages/search/search"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -40,5 +41,7 @@
       }
     ]
   },
-  "requiredBackgroundModes": ["audio"]
+  "requiredBackgroundModes": [
+    "audio"
+  ]
 }
