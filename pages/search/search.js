@@ -10,7 +10,8 @@ Page({
     placeHolderContent:'',
     hotList:[],
     searchContent:'',
-    searchList:[]
+    searchList:[],
+    historyList:[]
   },
 
   /**
@@ -19,6 +20,7 @@ Page({
   onLoad(options) {
     this.getPlaceHolder();
     this.getHotData();
+    this.getHisrotyList();
   },
   async getPlaceHolder(){
     let placeHolderData=await request('/search/default');
@@ -52,9 +54,42 @@ Page({
       })
       return
     }
-    let searchListData=await request('/search',{keywords:this.data.searchContent,limit:10});
+    let {searchContent,historyList}=this.data;
+    if(historyList.indexOf(searchContent)===-1){
+      historyList.unshift(searchContent)
+    }else{
+      historyList.splice(historyList.indexOf(searchContent),1);
+      historyList.unshift(searchContent);
+    }
+    let searchListData=await request('/search',{keywords:searchContent,limit:10});
     this.setData({
-      searchList:searchListData.result.songs
+      searchList:searchListData.result.songs,
+      historyList
+    })
+    wx.setStorageSync('searchHistory', historyList)
+  },
+  getHisrotyList(){
+    let historyList = wx.getStorageSync('searchHistory');
+    this.setData({
+      historyList
+    })
+  },
+  clearSearchContent(){
+    this.setData({
+      searchContent:''
+    })
+  },
+  clearSearchHistory(){
+    wx.showModal({
+      title: '确认删除吗',
+      success:(res)=>{
+        if(res.confirm===true){
+          this.setData({
+            historyList:[]
+          })
+          wx.removeStorageSync('searchHistory');
+        }
+      }
     })
   },
   /**

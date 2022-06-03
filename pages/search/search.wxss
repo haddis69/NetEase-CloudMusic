@@ -29,6 +29,16 @@
   font-size: 30rpx;
   color: #d43c33;
 }
+.clear{
+  position: absolute;
+  right: 30rpx;
+  top: 0;
+  font-size: 30rpx;
+  z-index: 10;
+}
+.hotContainer{
+  margin-top: 50rpx;
+}
 .hotContainer .title{
   font-size: 28rpx;
   height: 80rpx;
@@ -70,4 +80,30 @@
   margin-left: 20rpx;
   border-bottom: 1rpx solid #eee;
   font-size: 26rpx;
+}
+.history{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 50rpx;
+  margin: 20rpx 0;
+}
+.history .title{
+  height: 50rpx;
+  font-size: 28rpx;
+}
+.history .historyItem{
+  height: 50rpx;
+  font-size: 26rpx;
+  background-color: #ededed;
+  margin-left: 30rpx;
+  padding: 0 20rpx;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+.history .delete{
+  position: absolute;
+  right: 15rpx;
+  bottom:10rpx;
+  font-size: 36rpx;
 }
