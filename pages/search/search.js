@@ -1,4 +1,5 @@
 import request from '../../utils/request'
+let isSend=false;
 // pages/search/search.js
 Page({
 
@@ -7,7 +8,9 @@ Page({
    */
   data: {
     placeHolderContent:'',
-    hotList:[]
+    hotList:[],
+    searchContent:'',
+    searchList:[]
   },
 
   /**
@@ -27,6 +30,31 @@ Page({
     let hotListData=await request('/search/hot/detail');
     this.setData({
       hotList:hotListData.data
+    })
+  },
+  handleInputChange(event){
+    this.setData({
+      searchContent:event.detail.value
+    })
+    if(isSend){
+      return;
+    }
+    isSend=true;
+    this.getSearchList();
+    setTimeout(()=>{
+      isSend=false
+    },3000)
+  },
+  async getSearchList(){
+    if(!this.data.searchContent){
+      this.setData({
+        searchList:[]
+      })
+      return
+    }
+    let searchListData=await request('/search',{keywords:this.data.searchContent,limit:10});
+    this.setData({
+      searchList:searchListData.result.songs
     })
   },
   /**
